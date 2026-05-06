@@ -221,14 +221,6 @@ class MultiHeadSelfAttention(nn.Module):
     def forward(self, x):
         """
         x shape: (batch_size, sequence_length, embedding_dim)
-
-        TODO:
-        1. Compute Q, K, V using linear projections.
-        2. Reshape/split into num_heads heads.
-        3. Compute scaled dot-product attention per head.
-        4. Concatenate heads back together.
-        5. Apply output projection W_o.
-
         Return shape:
             (batch_size, sequence_length, embedding_dim)
         """
@@ -278,11 +270,6 @@ class TransformerBlock(nn.Module):
         self.norm2 = nn.LayerNorm(embedding_dim)
 
     def forward(self, x):
-        """
-        TODO:
-        1. Attention sublayer with residual connection and normalization.
-        2. Feed-forward sublayer with residual connection and normalization.
-        """
         # attention sublayer with residual connection and layer norm
         x = self.norm1(x + self.attn(x))
 
@@ -311,19 +298,6 @@ class SimplifiedTransformerLM(nn.Module):
         self.classifier = nn.Linear(embedding_dim, vocab_size)
 
     def forward(self, input_ids):
-        """
-        TODO:
-        1. Convert token ids to embeddings via token_embedding.
-        2. Add positional encodings via position_embedding.
-        3. Pass through all transformer blocks sequentially.
-        4. Take the representation at the last sequence position.
-        5. Map to vocabulary logits using self.classifier.
-
-        input_ids shape:
-            (batch_size, sequence_length)
-        return shape:
-            (batch_size, vocab_size)
-        """
         # 1. convert token ids to embeddings
         x = self.token_embedding(input_ids)
         # 2. add positional encodings
@@ -368,14 +342,7 @@ def train_transformer(
         raise ValueError("num_blocks must be positive")
 
     set_seed(42)
-    # TODO:
-    # 1. Load corpus and build vocabulary.
-    # 2. Build training examples.
-    # 3. Create the model.
-    # 4. Define optimizer and loss.
-    # 5. Write the training loop.
-    # 6. Return model, vocab, idx_to_word, history.
-
+    
     # 1. load corpus and build vocabulary
     words, word_to_idx, idx_to_word = load_corpus(corpus_path, corpus_text)
 
@@ -433,11 +400,6 @@ def _words_to_ids(words, vocab, required_length):
 def predict_next_word(model, vocab, idx_to_word, input_words):
     """
     Predict the next word from a sequence of input words.
-
-    TODO:
-    1. Convert input words to token id tensor.
-    2. Run the model in eval mode without gradient computation.
-    3. Select the highest-scoring output word.
     """
     # 1. convert input words to ids tensor
     input_ids = _words_to_ids(input_words, vocab, model.sequence_length)
@@ -456,12 +418,6 @@ def predict_next_word(model, vocab, idx_to_word, input_words):
 def generate_text(model, vocab, idx_to_word, seed_words, num_words_to_generate):
     """
     Generate text autoregressively.
-
-    TODO:
-    1. Start with seed_words as the initial context.
-    2. Repeatedly predict the next word using the last sequence_length words.
-    3. Append each predicted word to the running sequence.
-    4. Return the full generated sequence (seed + generated words).
     """
     # 1. initialize with seed words
     output_words = list(seed_words)
