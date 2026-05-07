@@ -1,4 +1,4 @@
-# Bond_05_01 — Simplified Transformer Language Model
+# Simplified Transformer Language Model
 
 A implementation of a transformer-based language model in PyTorch. The model is trained on a built-in text corpus to perform next-word prediction and text generation.
 
